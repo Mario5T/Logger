@@ -2,7 +2,7 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: "30 18 * * *"   # 12:00 AM IST ✅
+    - cron: "30 18 * * *" # 12:00 AM IST
   workflow_dispatch:
 
 permissions:
@@ -11,17 +11,16 @@ permissions:
 jobs:
   commit-job:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Update progress log
+      - name: Update log
         run: |
           echo "Last updated on $(date -u)" >> progress.md
 
       - name: Commit changes
         run: |
+          export TZ=Asia/Kolkata
           git config user.name "Mario5T"
           git config user.email "singhtiivu@gmail.com"
           git add progress.md
@@ -29,4 +28,3 @@ jobs:
 
       - name: Push changes
         run: git push
-
